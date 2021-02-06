@@ -26,7 +26,9 @@
 #ifndef M_PI_2
     #define M_PI_2 1.57079632679489661923
 #endif
-
+#ifndef RAND_MAX
+    #define RAND_MAX 2147483647
+#endif
 #ifndef RNUM
     #define RNUM (2*(rand()/RAND_MAX)-1)
 #endif

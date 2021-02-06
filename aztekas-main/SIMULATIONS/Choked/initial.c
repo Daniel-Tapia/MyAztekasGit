@@ -11,8 +11,10 @@
 void Initial()
 {
    int n, i, j, k, cell;
-   double unif1, unif2, Noise;
+   double unif1, unif2, Noise, Rmax, Pi;
 
+   Rmax = 2147483647;
+   Pi = 3.14159265358979323846;
    //Initialize grid.time
    grid.time = 0.0;
 
@@ -26,11 +28,17 @@ void Initial()
 
    for( j = 0; j <= Nx2; j++ )
    {
-      unif1 = pow(-1,rand() % 2)*(rand()/RAND_MAX);
-      unif2 = pow(-1,rand() % 2)*(rand()/RAND_MAX);
-      Noise = densamp*sqrt(-2.*log(unif1))*cos(2*M_PI*unif2);
-      bounddenst[j] = density_0*(1+Noise)*(1.0 - (deltarho)*pow(cos(grid.X2[j]),2.0));
+      unif1 = pow(-1,rand() % 2)*(rand()/Rmax);
+      printf("unif1 en %d es:	%.6f\n", j, unif1);
+      unif2 = pow(-1,rand() % 2)*(rand()/Rmax);
+      printf("unif2 en %d es:	%.6f\n", j, unif2);
+      Noise = densamp*sqrt(-2.*log(unif1))*cos(2*Pi*unif2);
+      //Noise = 0;
+      printf("Noise en %d es:	%.6f\n", j, Noise);
+      bounddenst[j] = density_0*(1.0 - (deltarho)*pow(cos(grid.X2[j]),2.0))*(1+Noise);
+      printf("bounddenst en %d es:	%.6f\n", j, bounddenst[j]);
       boundpress[j] = pow(bounddenst[j],K)/K;
+      printf("boundpress en %d es:	%.6f\n", j, boundpress[j]);
    }
 
 #if DIM == 1 
